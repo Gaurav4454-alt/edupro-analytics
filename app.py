@@ -181,23 +181,45 @@ with col_f:
     st.plotly_chart(fig_tier, use_container_width=True)
 
 # --- Row 4: Expertise Performance ---
+# --- Row 4: Expertise Performance ---
 st.subheader("🧠 Expertise-Wise Performance Comparison")
-col_g, col_h = st.columns(2)
 
-with col_g:
-    exp_perf = (
-        filtered.groupby("Expertise")
-        .agg(AvgTeacherRating=("TeacherRating", "mean"), AvgCourseRating=("CourseRating", "mean"), Instructors=("TeacherID", "nunique"))
-        .reset_index()
-        .sort_values("AvgTeacherRating", ascending=True)
-        .round(2)
+exp_perf = (
+    filtered.groupby("Expertise")
+    .agg(
+        AvgTeacherRating=("TeacherRating", "mean"),
+        AvgCourseRating=("CourseRating", "mean"),
+        Instructors=("TeacherID", "nunique")
     )
-    fig_bar = go.Figure()
-    fig_bar.add_trace(go.Bar(y=exp_perf["Expertise"], x=exp_perf["AvgTeacherRating"], name="Avg Teacher Rating", orientation="h", marker_color="#4F8EF7"))
-    fig_bar.add_trace(go.Bar(y=exp_perf["Expertise"], x=exp_perf["AvgCourseRating"], name="Avg Course Rating", orientation="h", marker_color="#F7C948"))
-    fig_bar.update_layout(barmode="group", height=420, margin=dict(t=20), legend=dict(orientation="h"))
-    st.plotly_chart(fig_bar, use_container_width=True)
+    .reset_index()
+    .sort_values("AvgTeacherRating", ascending=True)
+    .round(2)
+)
 
+fig_bar = go.Figure()
+fig_bar.add_trace(
+    go.Bar(
+        y=exp_perf["Expertise"],
+        x=exp_perf["AvgTeacherRating"],
+        name="Avg Teacher Rating",
+        orientation="h"
+    )
+)
+fig_bar.add_trace(
+    go.Bar(
+        y=exp_perf["Expertise"],
+        x=exp_perf["AvgCourseRating"],
+        name="Avg Course Rating",
+        orientation="h"
+    )
+)
+
+fig_bar.update_layout(
+    barmode="group",
+    height=420
+)
+
+st.plotly_chart(fig_bar, use_container_width=True)
 with col_h:
     st.subheader("🚻 Gender Distribution & Ratings")
     gender_data = (
