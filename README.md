@@ -31,3 +31,17 @@ EduPro Analytics Dashboard is a data analytics project designed to analyze instr
 ```bash
 pip install -r requirements.txt
 streamlit run app.py
+
+## 🔗 Project Links
+
+### Source Code Repository
+https://github.com/Gaurav4454-alt/edupro-analytics
+
+### Live Dashboard
+https://YOUR-STREAMLIT-APP.streamlit.app
+
+### Research Paper
+https://github.com/Gaurav4454-alt/edupro-analytics/blob/main/EduPro_Research_Paper.md
+
+### Demo Video
+https://YOUR-YOUTUBE-VIDEO-LINK
