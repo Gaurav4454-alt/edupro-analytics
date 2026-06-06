@@ -88,18 +88,23 @@ with col_a:
         height=360,
     )
 
-with col_b:
-    st.subheader("📊 Teacher Rating Distribution")
-    fig_hist = px.histogram(
-        teachers[teachers["TeacherRating"].between(rating_range[0], rating_range[1])],
-        x="TeacherRating",
-        nbins=20,
-        color_discrete_sequence=["#4F8EF7"],
+with col_h:
+    st.subheader("📊 Teacher Ratings by Expertise")
+
+    fig_gender = px.box(
+        filtered.drop_duplicates("TeacherID"),
+        x="Expertise",
+        y="TeacherRating",
         labels={"TeacherRating": "Teacher Rating"},
     )
-    fig_hist.update_layout(height=360, margin=dict(t=20, b=20))
-    st.plotly_chart(fig_hist, use_container_width=True)
 
+    fig_gender.update_layout(
+        height=420,
+        margin=dict(t=20),
+        xaxis_tickangle=-30
+    )
+
+    st.plotly_chart(fig_gender, use_container_width=True)
 # --- Row 2: Experience vs Ratings ---
 st.subheader("🔍 Experience vs Performance Analysis")
 col_c, col_d = st.columns(2)
