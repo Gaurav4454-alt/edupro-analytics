@@ -88,23 +88,7 @@ with col_a:
         height=360,
     )
 
-with col_h:
-    st.subheader("📊 Teacher Ratings by Expertise")
 
-    fig_gender = px.box(
-        filtered.drop_duplicates("TeacherID"),
-        x="Expertise",
-        y="TeacherRating",
-        labels={"TeacherRating": "Teacher Rating"},
-    )
-
-    fig_gender.update_layout(
-        height=420,
-        margin=dict(t=20),
-        xaxis_tickangle=-30
-    )
-
-    st.plotly_chart(fig_gender, use_container_width=True)
 # --- Row 2: Experience vs Ratings ---
 st.subheader("🔍 Experience vs Performance Analysis")
 col_c, col_d = st.columns(2)
@@ -220,23 +204,27 @@ fig_bar.update_layout(
 )
 
 st.plotly_chart(fig_bar, use_container_width=True)
-with col_h:
-    st.subheader("🚻 Gender Distribution & Ratings")
-    gender_data = (
-        filtered.drop_duplicates("TeacherID")
-        .groupby(["Gender_x", "Expertise"])["TeacherRating"]
-        .mean()
-        .reset_index()
-        .rename(columns={"Gender_x": "Gender"})
-    )
-    fig_gender = px.box(
-        filtered.drop_duplicates("TeacherID"),
-        x="Expertise", y="TeacherRating", color="Gender_x",
-        labels={"Gender_x": "Gender", "TeacherRating": "Teacher Rating"},
-        color_discrete_sequence=["#4F8EF7", "#E85D75"],
-    )
-    fig_gender.update_layout(height=420, margin=dict(t=20), xaxis_tickangle=-30)
-    st.plotly_chart(fig_gender, use_container_width=True)
+# --- Gender Distribution & Ratings ---
+st.subheader("🚻 Gender Distribution & Ratings")
+
+fig_gender = px.box(
+    filtered.drop_duplicates("TeacherID"),
+    x="Expertise",
+    y="TeacherRating",
+    color="Gender",
+    labels={
+        "Gender": "Gender",
+        "TeacherRating": "Teacher Rating"
+    }
+)
+
+fig_gender.update_layout(
+    height=420,
+    margin=dict(t=20),
+    xaxis_tickangle=-30
+)
+
+st.plotly_chart(fig_gender, use_container_width=True)
 
 # --- Footer ---
 st.markdown("---")
